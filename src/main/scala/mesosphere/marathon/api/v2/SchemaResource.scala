@@ -6,7 +6,7 @@ import javax.ws.rs.core.{ MediaType }
 import mesosphere.marathon.MarathonConf
 import com.codahale.metrics.annotation.Timed
 import mesosphere.marathon.api.{ ModelValidation, RestResource }
-import scala.io.Source
+import java.io.InputStream
 
 @Path("v2/schemas")
 @Consumes(Array(MediaType.APPLICATION_JSON))
@@ -16,9 +16,7 @@ class SchemaResource @Inject() (
 
   @GET
   @Timed
-  def index(): String = {
-    Source.fromInputStream(
-      getClass().getResourceAsStream("AppDefinition.json"), "UTF-8"
-    ).mkString
+  def index(): InputStream = {
+    getClass().getResourceAsStream("AppDefinition.json")
   }
 }
